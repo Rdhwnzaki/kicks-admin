@@ -26,10 +26,12 @@ const Sidebar = () => {
                             <span className='fw-bold'>PRODUCTS</span>
                         </div>
                     </Link>
-                    <div className='d-flex flex-row align-items-center'>
-                        <FaClipboardList className='me-2 fs-4' />
-                        <span className='fw-bold'>ORDERS</span>
-                    </div>
+                    <Link to="/order" className='text-decoration-none'>
+                        <div className='d-flex flex-row align-items-center'>
+                            <FaClipboardList className='me-2 fs-4' />
+                            <span className='fw-bold'>ORDERS</span>
+                        </div>
+                    </Link>
                 </li>
             </ul>
         </div>
