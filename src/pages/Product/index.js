@@ -132,6 +132,8 @@ const Product = () => {
 
     const toggleDroptown = () => setDropdownOpen((prevState) => !prevState);
 
+
+    document.title = "Products | Kicks Admin";
     return (
         <MainLayout>
             <p className='fs-3 fw-bold'>Product</p>
