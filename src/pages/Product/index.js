@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import MainLayout from "../../layouts/MainLayout"
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap'
+import {
+    Breadcrumb, BreadcrumbItem, ListGroup, ListGroupItem, Dropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+} from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -14,8 +19,9 @@ import {
     getProductLoading,
     resetProductState,
 } from "../../store/product/action";
-import DeleteModal from '../../components/DeleteModal';
 import { isEmpty } from 'lodash';
+import Image from "../../assets/Rectangle 5.png"
+import { BsThreeDots } from "react-icons/bs";
 
 const Product = () => {
     const dispatch = useDispatch()
@@ -38,7 +44,7 @@ const Product = () => {
         error: state.Product.error,
     }));
 
-    const toggle = useCallback(() => {
+    const Droptown = useCallback(() => {
         if (modal) {
             setModal(false);
             setProduct(null);
@@ -66,8 +72,8 @@ const Product = () => {
             name: data.name,
             city: data.city
         })
-        toggle()
-    }, [toggle])
+        Droptown()
+    }, [Droptown])
 
     const validation = useFormik({
         enableReinitialize: true,
@@ -97,7 +103,7 @@ const Product = () => {
                 dispatch(onAddNewProduct(newProduct));
                 validation.resetForm();
             }
-            toggle();
+            Droptown();
         },
     });
 
@@ -122,6 +128,10 @@ const Product = () => {
         }
     }, [products])
 
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggleDroptown = () => setDropdownOpen((prevState) => !prevState);
+
     return (
         <MainLayout>
             <p className='fs-3 fw-bold'>Product</p>
@@ -138,6 +148,50 @@ const Product = () => {
                     <button className='btn btn-dark'>ADD NEW PRODUCT</button>
                 </div>
             </div>
+            <div className='mt-3'>
+                <div className='row'>
+                    <div className='col-3'>
+                        <div className='card border-0 rounded-4'>
+                            <div className='card-body'>
+                                <div className='d-flex justify-content-between'>
+                                    <div>
+                                        <img src={Image} width={100} />
+                                    </div>
+                                    <div className='d-flex flex-column'>
+                                        <p className='fw-medium fs-6'>Adidas Ultra boost</p>
+                                        <p className='text-secondary fs-6'>Sneaker</p>
+                                        <p className='fs-6 fw-bold'>Rp.200.000</p>
+                                    </div>
+                                    <div>
+                                        <Dropdown isOpen={dropdownOpen} toggle={toggleDroptown} direction="down">
+                                            <DropdownToggle color='light'><BsThreeDots /></DropdownToggle>
+                                            <DropdownMenu >
+                                                <DropdownItem>Edit Product</DropdownItem>
+                                                <DropdownItem>Delete Product</DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+                                </div>
+                                <div className='d-flex flex-column mt-2'>
+                                    <span className='fs-6 fw-medium'>Summary</span>
+                                    <p className='fs-6 text-secondary'>Long distance running requires a lot from athletes.</p>
+                                    <ListGroup>
+                                        <ListGroupItem className='d-flex justify-content-between m-0'>
+                                            <span>Terjual</span>
+                                            <span>100</span>
+                                        </ListGroupItem>
+                                        <ListGroupItem className='d-flex justify-content-between m-0'>
+                                            <span>Stock</span>
+                                            <span>211</span>
+                                        </ListGroupItem>
+                                    </ListGroup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ToastContainer />
         </MainLayout>
     )
 }
